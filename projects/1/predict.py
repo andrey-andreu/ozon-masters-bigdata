@@ -27,6 +27,6 @@ read_opts=dict(
 )
 
 for df in pd.read_csv(sys.stdin, **read_opts):
-    pred = model.predict_proba(df[:, 1:14])[:, 1]
+    pred = model.predict_proba(df.iloc[:, 1:14])[:, 1]
     out = zip(df.id, pred)
     print("\n".join(["{0}\t{1}".format(*i) for i in out]))

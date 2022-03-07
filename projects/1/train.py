@@ -46,7 +46,7 @@ df = pd.read_table(train_path, **read_table_opts)
 
 #split train/test
 X_train, X_test, y_train, y_test = train_test_split(
-    df.iloc[:,2:], df.iloc[:,1], test_size=0.33, random_state=42
+    df.iloc[:,2:15], df.iloc[:,1], test_size=0.33, random_state=42
 )
 
 #
