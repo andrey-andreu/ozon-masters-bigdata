@@ -45,4 +45,3 @@ ROW FORMAT DELIMITED
 FIELDS TERMINATED BY '\t'
 STORED AS TEXTFILE
 LOCATION '/datasets/criteo/criteo_test_large_features';
--- TBLPROPERTIES ('serialization.null.format' = 'NULL');
