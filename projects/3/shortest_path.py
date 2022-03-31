@@ -28,7 +28,6 @@ start = int(sys.argv[1])
 end = int(sys.argv[2])
 input_file  = sys.argv[3]
 output_file = sys.argv[4]
-output_file = "andrey-andreu_hw3_output"
 
 df = spark.read.csv(input_file, schema=schema, sep=r"\t")
 df = df.distinct().cache()
@@ -44,8 +43,6 @@ while True:
 columns = ["column_" + str(i) for i in range(current_len+2)]
 answer_arr = temporary_data.filter(f'column_{current_len+1} = {end}')[columns].collect()
 
-import csv
-with open(output_file, "w") as file:
-    employee_writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    for answer in answer_arr:
-        employee_writer.writerow(list(answer))
+answer = [list(an) for an in answer_arr]
+ans = spark.createDataFrame(answer)
+ans.write.csv(path=output_file, mode='overwrite')
