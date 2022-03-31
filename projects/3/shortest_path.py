@@ -41,8 +41,10 @@ while True:
         break
     current_len += 1
 columns = ["column_" + str(i) for i in range(current_len+2)]
-answer_arr = temporary_data.filter(f'column_{current_len+1} = {end}')[columns].collect()[0]
-answer = ','.join(str(v) for v in answer_arr)
+answer_arr = temporary_data.filter(f'column_{current_len+1} = {end}')[columns].collect()
 
-with open("output_file", "w") as file:
-    file.write(answer)
+import csv
+with open(output_file, "w") as file:
+    employee_writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    for answer in answer_arr:
+        employee_writer.writerow(list(answer))
