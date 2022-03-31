@@ -28,6 +28,7 @@ start = int(sys.argv[1])
 end = int(sys.argv[2])
 input_file  = sys.argv[3]
 output_file = sys.argv[4]
+output_file = "/user/andrey-andreu/andrey-andreu_hw3_output"
 
 df = spark.read.csv(input_file, schema=schema, sep=r"\t")
 df = df.distinct().cache()
