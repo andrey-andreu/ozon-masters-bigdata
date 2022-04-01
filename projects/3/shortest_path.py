@@ -41,8 +41,4 @@ while True:
         break
     current_len += 1
 columns = ["column_" + str(i) for i in range(current_len+2)]
-# answer_arr = temporary_data.filter(f'column_{current_len+1} = {end}')[columns].collect()
 temporary_data.filter(f'column_{current_len+1} = {end}')[columns].write.csv(path=output_file, mode='overwrite')
-# answer = [list(an) for an in answer_arr]
-# ans = spark.createDataFrame(answer)
-# ans.write.csv(path=output_file, mode='overwrite')
