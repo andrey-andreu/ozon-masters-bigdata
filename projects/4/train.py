@@ -1,16 +1,18 @@
+#!/opt/conda/envs/dsenv/bin/python
+
 import os
 import sys
 
 from pyspark.sql import SparkSession
 
-SPARK_HOME = "/usr/hdp/current/spark2-client"
-PYSPARK_PYTHON = "/opt/conda/envs/dsenv/bin/python"
-os.environ["PYSPARK_PYTHON"]= PYSPARK_PYTHON
-os.environ["SPARK_HOME"] = SPARK_HOME
+# SPARK_HOME = "/usr/hdp/current/spark2-client"
+# PYSPARK_PYTHON = "/opt/conda/envs/dsenv/bin/python"
+# os.environ["PYSPARK_PYTHON"]= PYSPARK_PYTHON
+# os.environ["SPARK_HOME"] = SPARK_HOME
 
-PYSPARK_HOME = os.path.join(SPARK_HOME, "python/lib")
-sys.path.insert(0, os.path.join(PYSPARK_HOME, "py4j-0.10.7-src.zip"))
-sys.path.insert(0, os.path.join(PYSPARK_HOME, "pyspark.zip"))
+# PYSPARK_HOME = os.path.join(SPARK_HOME, "python/lib")
+# sys.path.insert(0, os.path.join(PYSPARK_HOME, "py4j-0.10.7-src.zip"))
+# sys.path.insert(0, os.path.join(PYSPARK_HOME, "pyspark.zip"))
 
 spark = SparkSession.builder.getOrCreate()
 spark.sparkContext.setLogLevel('WARN')
@@ -41,15 +43,15 @@ train = spark.read.json(train_path, schema=schema)
 
 train = train.withColumn("vote", train["vote"].cast(IntegerType()))
 train = train.na.fill(value=0)
-train = train.na.fill("NaN")
-# train = train.withColumn('review', f.concat_ws(' ', f.col("reviewText"), f.col("summary")))
+# train = train.na.fill("NaN")
+# # train = train.withColumn('review', f.concat_ws(' ', f.col("reviewText"), f.col("summary")))
 
-train = train.select(
- 'overall',
- 'vote',
- 'verified',
- 'reviewText',
- 'unixReviewTime').cache()
+# train = train.select(
+#  'overall',
+#  'vote',
+#  'verified',
+#  'reviewText',
+#  'unixReviewTime').cache()
 
 pipeline_model = pipeline.fit(train)
 pipeline_model.write().overwrite().save(model_path)

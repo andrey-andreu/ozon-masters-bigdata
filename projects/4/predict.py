@@ -1,3 +1,4 @@
+#!/opt/conda/envs/dsenv/bin/python
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder.getOrCreate()
@@ -31,15 +32,14 @@ test = spark.read.json(test_path, schema=schema)
 
 test = test.withColumn("vote", test["vote"].cast(IntegerType()))
 test = test.na.fill(value=0)
-test = test.na.fill("NaN")
-# test = test.withColumn('review', f.concat_ws(' ', f.col("reviewText"), f.col("summary")))
+# test = test.na.fill("NaN")
+# # test = test.withColumn('review', f.concat_ws(' ', f.col("reviewText"), f.col("summary")))
 
-test = test.select(
- 'vote',
- 'verified',
- 'reviewText',
- 'unixReviewTime').cache()
+# test = test.select(
+#  'vote',
+#  'verified',
+#  'reviewText',
+#  'unixReviewTime').cache()
 
 pred = model.transform(test)
-prediction = pred.select(f.col("prediction").cast(FloatType())).toPandas()
-prediction.to_csv(result_path, header=None, index=False)
+pred.write().overwrite().save(result_path)

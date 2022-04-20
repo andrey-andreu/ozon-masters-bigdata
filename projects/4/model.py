@@ -1,9 +1,11 @@
+#!/opt/conda/envs/dsenv/bin/python
+
 from pyspark.sql.types import *
 from pyspark.ml.feature import *
 from pyspark.ml.classification import LogisticRegression
 from pyspark.ml import Pipeline
 
-tokenizer = Tokenizer(inputCol="review", outputCol="words")
+tokenizer = Tokenizer(inputCol="reviewText", outputCol="words")
 stop_words = StopWordsRemover.loadDefaultStopWords("english")
 swr = StopWordsRemover(inputCol=tokenizer.getOutputCol(), outputCol="words_filtered", stopWords=stop_words)
 count_vectorizer = CountVectorizer(inputCol=swr.getOutputCol(), outputCol="word_vector", binary=True)
