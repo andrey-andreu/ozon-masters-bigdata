@@ -15,7 +15,6 @@ test_path = sys.argv[1]
 result_path = sys.argv[2]
 
 schema = StructType([
-    StructField("overall", FloatType()),
     StructField("vote", StringType()),
     StructField("verified", BooleanType()),
     StructField("reviewTime", StringType()),
@@ -36,7 +35,6 @@ test = test.na.fill("NaN")
 test = test.withColumn('review', f.concat_ws(' ', f.col("reviewText"), f.col("summary")))
 
 test = test.select(
- 'overall',
  'vote',
  'verified',
  'review',
