@@ -41,8 +41,8 @@ schema = StructType([
 
 train = spark.read.json(train_path, schema=schema)
 
-train = train.withColumn("vote", train["vote"].cast(IntegerType()))
-train = train.na.fill(value=0)
+# train = train.withColumn("vote", train["vote"].cast(IntegerType()))
+# train = train.na.fill(value=0)
 # train = train.na.fill("NaN")
 # # train = train.withColumn('review', f.concat_ws(' ', f.col("reviewText"), f.col("summary")))
 

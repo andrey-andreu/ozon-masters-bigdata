@@ -30,8 +30,8 @@ schema = StructType([
 model = PipelineModel.load(model_path)
 test = spark.read.json(test_path, schema=schema)
 
-test = test.withColumn("vote", test["vote"].cast(IntegerType()))
-test = test.na.fill(value=0)
+# test = test.withColumn("vote", test["vote"].cast(IntegerType()))
+# test = test.na.fill(value=0)
 # test = test.na.fill("NaN")
 # # test = test.withColumn('review', f.concat_ws(' ', f.col("reviewText"), f.col("summary")))
 
