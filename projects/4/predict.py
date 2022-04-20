@@ -27,7 +27,7 @@ schema = StructType([
 ])
 
 model = PipelineModel.load(model_path)
-test = spark.read.json(test_path, schema=schema, multiLine=True)
+test = spark.read.json(test_path, schema=schema)
 
 test = test.withColumn("vote", test["vote"].cast(IntegerType()))
 test = test.na.fill(value=0)

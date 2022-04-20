@@ -17,13 +17,9 @@ spark.sparkContext.setLogLevel('WARN')
 
 from model import pipeline
 
-from IPython.display import Image
 from pyspark.sql import functions as f
 from pyspark.sql.types import *
 from pyspark.ml.feature import *
-from pyspark.ml.classification import LogisticRegression
-from pyspark.ml import Pipeline
-from pyspark.ml.evaluation import RegressionEvaluator
 
 train_path = sys.argv[1]
 model_path = sys.argv[2]
@@ -41,7 +37,7 @@ schema = StructType([
     StructField("unixReviewTime", IntegerType()),
 ])
 
-train = spark.read.json(train_path, schema=schema, multiLine=True)
+train = spark.read.json(train_path, schema=schema)
 
 train = train.withColumn("vote", train["vote"].cast(IntegerType()))
 train = train.na.fill(value=0)
