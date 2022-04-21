@@ -16,6 +16,7 @@ test_path = sys.argv[1]
 result_path = sys.argv[2]
 
 schema = StructType([
+    StructField("overall", FloatType()),
     StructField("vote", StringType()),
     StructField("verified", BooleanType()),
     StructField("reviewTime", StringType()),
@@ -29,6 +30,7 @@ schema = StructType([
 
 model = PipelineModel.load(model_path)
 test = spark.read.json(test_path, schema=schema)
+test.cache()
 
 # test = test.withColumn("vote", test["vote"].cast(IntegerType()))
 # test = test.na.fill(value=0)
@@ -43,3 +45,4 @@ test = spark.read.json(test_path, schema=schema)
 
 pred = model.transform(test)
 pred.write().overwrite().save(result_path)
+spark.stop()

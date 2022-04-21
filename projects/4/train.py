@@ -40,6 +40,7 @@ schema = StructType([
 ])
 
 train = spark.read.json(train_path, schema=schema)
+train.cache()
 
 # train = train.withColumn("vote", train["vote"].cast(IntegerType()))
 # train = train.na.fill(value=0)
@@ -55,3 +56,4 @@ train = spark.read.json(train_path, schema=schema)
 
 pipeline_model = pipeline.fit(train)
 pipeline_model.write().overwrite().save(model_path)
+spark.stop()
