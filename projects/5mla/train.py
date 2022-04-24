@@ -60,7 +60,7 @@ def main():
     #
     # Train the model
     #
-    model.gradboosting(gradboosting__n_estimators=parse_args.model_param1)
+    model.set_params(gradboosting__n_estimators=parse_args.model_param1)
     with mlflow.start_run():
         model.fit(X_train, y_train)
         
