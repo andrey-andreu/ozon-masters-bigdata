@@ -54,16 +54,23 @@ def main():
     df = pd.read_table(parse_args.train_path, **read_table_opts)
 
     #split train/test
-    X_train = df.iloc[:,2:15]
-    y_train = df.iloc[:,1]
-
+    X_train, X_test, y_train, y_test = train_test_split(
+    df.iloc[:,2:15], df.iloc[:,1], test_size=0.33, random_state=42
+    )
     #
     # Train the model
     #
-    mlflow.sklearn.autolog()
+    model.gradboosting(gradboosting__n_estimators=parse_args.model_param1)
     with mlflow.start_run():
-        model.set_params(gradboosting__n_estimators=parse_args.model_param1)
         model.fit(X_train, y_train)
+        
+        #log model params
+        mlflow.log_param("model_param1", parse_args.model_param1)
+        mlflow.sklearn.log_model(model, artifact_path="model_5mla")
+        
+        pred = model.predict(X_test)
+        model_score = log_loss(y_test, pred)
+        mlflow.log_metrics({"log_loss": model_score})
 
 
     # model.fit(X_train, y_train)

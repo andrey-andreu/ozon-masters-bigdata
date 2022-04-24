@@ -1,4 +1,4 @@
-name: 5mle
+name: 5mla
 
 conda_env: conda.yaml
 
@@ -7,7 +7,4 @@ entry_points:
     parameters:
       train_path: {type: string}
       model_param1: {type: int, default: 200}
-    command: |
-      python train.py \
-      --train_path={train_path} \
-      --model_param1={model_param1}
+    command: "python train.py {train_path} {model_param1}"
