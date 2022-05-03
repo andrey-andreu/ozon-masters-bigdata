@@ -41,5 +41,5 @@ preprocessor = ColumnTransformer(
 # Now we have a full prediction pipeline.
 model = Pipeline(steps=[
     ('preprocessor', preprocessor),
-    ('gradboosting', GradientBoostingClassifier())
+    ('gradboosting', GradientBoostingClassifier(n_estimators=200))
 ])
