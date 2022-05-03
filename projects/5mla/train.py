@@ -61,8 +61,8 @@ def main():
     # Train the model
     #
     mlflow.sklearn.autolog()
-    model.set_params(gradboosting__n_estimators=parse_args.model_param1)
     with mlflow.start_run():
+        model.set_params(gradboosting__n_estimators=parse_args.model_param1)
         model.fit(X_train, y_train)
         
         #log model params
