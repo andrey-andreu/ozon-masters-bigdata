@@ -6,5 +6,5 @@ entry_points:
   main:
     parameters:
       train_path: path
-      model_param1: {type: int, default: 200}
+      model_param1: {type: int, default: 100}
     command: "python train.py {train_path} {model_param1}"

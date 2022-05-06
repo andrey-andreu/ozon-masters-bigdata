@@ -15,11 +15,18 @@ import mlflow
 # Import model definition
 #
 def main():
-    parser = argparse.ArgumentParser()
+    # parser = argparse.ArgumentParser()
 
-    parser.add_argument('train_path', type=str)
-    parser.add_argument('model_param1', type=int, default=200)
-    parse_args = parser.parse_args()
+    # parser.add_argument('train_path', type=str)
+    # parser.add_argument('model_param1', type=int, default=200)
+    # parse_args = parser.parse_args()
+
+    try: 
+      train_path = sys.argv[1] 
+      model_param1 = int(sys.argv[2]) 
+    except: 
+        sys.exit(1)
+
     from model import model, fields
 
     #
@@ -51,7 +58,7 @@ def main():
     #num_reviews,CLEANLINESS,ROOM,SERVICE,LOCATION,VALUE,COMFORT,overall_ratingsource""".replace("\n",'').split(",")
 
     read_table_opts = dict(sep="\t", names=fields, index_col=False)
-    df = pd.read_table(parse_args.train_path, **read_table_opts)
+    df = pd.read_table(train_path, **read_table_opts)
 
     #split train/test
     X_train, X_test, y_train, y_test = train_test_split(
@@ -62,11 +69,11 @@ def main():
     #
     mlflow.sklearn.autolog()
     with mlflow.start_run():
-        model.set_params(gradboosting__max_iter=parse_args.model_param1)
+        model.set_params(gradboosting__max_iter=model_param1)
         model.fit(X_train, y_train)
         
         #log model params
-        mlflow.log_param("model_param1", parse_args.model_param1)
+        mlflow.log_param("model_param1", model_param1)
         mlflow.sklearn.log_model(model, artifact_path="model_5mla")
         
         pred = model.predict(X_test)
