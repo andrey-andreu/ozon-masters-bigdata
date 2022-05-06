@@ -1,9 +1,10 @@
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.ensemble import GradientBoostingClassifier, LogisticRegression
+from sklearn.ensemble import GradientBoostingClassifier
 
 #
 # Dataset fields
