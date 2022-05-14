@@ -88,4 +88,4 @@ else:
     new_data2 = new_data.select("id", "word_vector")
 
 new_data2.write.mode('overwrite').parquet(save_path)
-spark.close()
+spark.stop()

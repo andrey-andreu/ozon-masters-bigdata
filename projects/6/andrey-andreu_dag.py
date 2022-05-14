@@ -22,7 +22,7 @@ with DAG(
         application_args = ["--path_in", "/datasets/amazon/all_reviews_5_core_train_extra_small_sentiment.json",
                            "--path_out", "andrey-andreu_train_out"],
         spark_binary="/usr/bin/spark-submit", 
-        env_vars={"PYSPARK_PYTHON": "/opt/conda/envs/dsenv/bin/python"}
+        env_vars={"PYSPARK_PYTHON": "/opt/conda/envs/dsenv/bin/python2"}
     )
     
     t2 = SparkSubmitOperator(
@@ -31,7 +31,7 @@ with DAG(
         application_args = ["--path_in", "/datasets/amazon/all_reviews_5_core_test_extra_small_features.json",
                            "--path_out", "andrey-andreu_test_out"],
         spark_binary="/usr/bin/spark-submit", 
-        env_vars={"PYSPARK_PYTHON": "/opt/conda/envs/dsenv"}
+        env_vars={"PYSPARK_PYTHON": "/opt/conda/envs/dsenv/bin/python2"}
     )
 
     t3 = BashOperator(
@@ -56,7 +56,7 @@ with DAG(
                            "--pred-out", "andrey-andreu_hw6_prediction",
                            "--sklearn-model-in", f'{base_dir}/6.joblib'],
         spark_binary="/usr/bin/spark-submit", 
-        env_vars={"PYSPARK_PYTHON": "/opt/conda/envs/dsenv"}
+        env_vars={"PYSPARK_PYTHON": "/opt/conda/envs/dsenv/bin/python2"}
     )
     
     t1 >> t2 >> t3 >> t4 >> t5 >> t6 

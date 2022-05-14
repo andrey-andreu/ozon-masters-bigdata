@@ -68,4 +68,4 @@ data_pred["prediction"] = pred.astype(int)
 data_pred_spark = spark.createDataFrame(data_pred)
 data_pred_spark.write.mode("overwrite").save(pred_path, header='false', format='csv')
 
-spark.close()
+spark.stop()
