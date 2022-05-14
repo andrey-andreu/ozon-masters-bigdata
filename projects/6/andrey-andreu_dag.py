@@ -46,7 +46,8 @@ with DAG(
 
     t5 = FileSensor(
         task_id='model_sensor',
-        filepath=f'{base_dir}/6.joblib'
+        filepath=f'{base_dir}/6.joblib',
+        timeout=6000
     )
     
     t6 = SparkSubmitOperator(
