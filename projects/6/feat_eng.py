@@ -16,8 +16,8 @@ parser.add_argument(
 args = parser.parse_args()
 
 SPARK_HOME = "/usr/hdp/current/spark2-client"
-PYSPARK_PYTHON = "/opt/conda/envs/dsenv/bin/python2"
-os.environ["PYSPARK_PYTHON"]= PYSPARK_PYTHON
+# PYSPARK_PYTHON = "/opt/conda/envs/dsenv/bin/python2"
+# os.environ["PYSPARK_PYTHON"]= PYSPARK_PYTHON
 os.environ["SPARK_HOME"] = SPARK_HOME
 
 PYSPARK_HOME = os.path.join(SPARK_HOME, "python/lib")
