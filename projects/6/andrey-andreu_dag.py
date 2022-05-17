@@ -41,13 +41,13 @@ with DAG(
     
     t4 = BashOperator(
         task_id='train_task',
-        bash_command=f'python {base_dir}/feat_eng.py --train_in {base_dir}/nick_train_out_local --sklearn_model_out {base_dir}6.joblib'
+        bash_command=f'python /opt/conda/envs/dsenv/bin/python{base_dir}/feat_eng.py --train_in {base_dir}/nick_train_out_local --sklearn_model_out {base_dir}/6.joblib'
     )
 
     t5 = FileSensor(
         task_id='model_sensor',
         filepath=f'{base_dir}/6.joblib',
-        timeout=6000
+        # timeout=6000
     )
     
     t6 = SparkSubmitOperator(
