@@ -8,6 +8,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import log_loss
 from joblib import dump
+from torch import int64
 from model import model, fields
 
 import mlflow
@@ -63,7 +64,8 @@ def main():
     # X_train, X_test, y_train, y_test = train_test_split(
     # df.iloc[:,2:15], df.iloc[:,1], test_size=0.33, random_state=42
     # )
-    X = df.iloc[:,2:15]
+    df = df.astype(int64)
+    X = df.iloc[:,2:]
     y = df.iloc[:,1]
     #
     # Train the model

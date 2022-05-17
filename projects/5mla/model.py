@@ -26,21 +26,21 @@ numeric_transformer = Pipeline(steps=[
 #    ('scaler', StandardScaler())
 ])
 
-# categorical_transformer = Pipeline(steps=[
-#     ('imputer', SimpleImputer(strategy='constant', fill_value='missing')),
-#     ('onehot', OneHotEncoder(handle_unknown='ignore'))
-# ])
+categorical_transformer = Pipeline(steps=[
+    ('imputer', SimpleImputer(strategy='constant', fill_value='missing')),
+    ('onehot', OneHotEncoder(handle_unknown='ignore'))
+])
 
 
 preprocessor = ColumnTransformer(
     transformers=[
         ('num', numeric_transformer, numeric_features),
-        # ('cat', categorical_transformer, categorical_features)
+        ('cat', categorical_transformer, categorical_features)
     ]
 )
 
 # Now we have a full prediction pipeline.
 model = Pipeline(steps=[
     ('preprocessor', preprocessor),
-    ('gradboosting', LogisticRegression(max_iter=100))
+    ('gradboosting', LogisticRegression(random_state=0, max_iter=100))
 ])
