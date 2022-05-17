@@ -64,7 +64,7 @@ def main():
     # X_train, X_test, y_train, y_test = train_test_split(
     # df.iloc[:,2:15], df.iloc[:,1], test_size=0.33, random_state=42
     # )
-    df = df.astype(int64)
+    df = df.astype(int)
     X = df.iloc[:,2:]
     y = df.iloc[:,1]
     #
