@@ -41,7 +41,7 @@ with DAG(
     
     t4 = BashOperator(
         task_id='train_task',
-        bash_command=f'python /opt/conda/envs/dsenv/bin/python{base_dir}/model_fit.py --train_in {base_dir}/nick_train_out_local --sklearn_model_out {base_dir}/6.joblib'
+        bash_command=f'/opt/conda/envs/dsenv/bin/python {base_dir}/model_fit.py --train_in {base_dir}/nick_train_out_local --sklearn_model_out {base_dir}/6.joblib'
     )
 
     t5 = FileSensor(
