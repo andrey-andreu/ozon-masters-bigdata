@@ -8,6 +8,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import log_loss
 from joblib import dump
+from model import model, fields
 
 import mlflow
 
@@ -26,8 +27,6 @@ def main():
       model_param1 = int(sys.argv[2]) 
     except: 
         sys.exit(1)
-
-    from model import model, fields
 
     #
     # Logging initialization
@@ -60,25 +59,27 @@ def main():
     read_table_opts = dict(sep="\t", names=fields, index_col=False)
     df = pd.read_table(train_path, **read_table_opts)
 
-    #split train/test
-    X_train, X_test, y_train, y_test = train_test_split(
-    df.iloc[:,2:15], df.iloc[:,1], test_size=0.33, random_state=42
-    )
+    # #split train/test
+    # X_train, X_test, y_train, y_test = train_test_split(
+    # df.iloc[:,2:15], df.iloc[:,1], test_size=0.33, random_state=42
+    # )
+    X = df.iloc[:,2:15]
+    y = df.iloc[:,1]
     #
     # Train the model
     #
     mlflow.sklearn.autolog()
     with mlflow.start_run():
         model.set_params(gradboosting__max_iter=model_param1)
-        model.fit(X_train, y_train)
+        model.fit(X, y)
         
-        #log model params
-        mlflow.log_param("model_param1", model_param1)
+        # #log model params
+        # mlflow.log_param("model_param1", model_param1)
         mlflow.sklearn.log_model(model, artifact_path="model_5mla")
         
-        pred = model.predict(X_test)
-        model_score = log_loss(y_test, pred)
-        mlflow.log_metrics({"log_loss": model_score})
+        # pred = model.predict(X_test)
+        # model_score = log_loss(y_test, pred)
+        # mlflow.log_metrics({"log_loss": model_score})
 
 
     # model.fit(X_train, y_train)
