@@ -8,7 +8,6 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import log_loss
 from joblib import dump
-from torch import int64
 from model import model, fields
 
 import mlflow
