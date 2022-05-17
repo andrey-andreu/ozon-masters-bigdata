@@ -4,11 +4,19 @@ import os, sys
 import logging
 import argparse
 
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.ensemble import GradientBoostingClassifier
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import log_loss
 from joblib import dump
-from model import model, fields
+from model import fields
 
 import mlflow
 
@@ -58,25 +66,30 @@ def main():
 
     read_table_opts = dict(sep="\t", names=fields, index_col=False)
     df = pd.read_table(train_path, **read_table_opts)
-
     # #split train/test
     # X_train, X_test, y_train, y_test = train_test_split(
     # df.iloc[:,2:15], df.iloc[:,1], test_size=0.33, random_state=42
     # )
-    df = df.astype(int)
-    X = df.iloc[:,2:]
+    # df = df.astype(int)
+    X = df.iloc[:,2:15]
     y = df.iloc[:,1]
+    X.fillna(0)
+    X = X.astype(int)
     #
     # Train the model
     #
+    model2 = Pipeline(steps=[
+    # ('preprocessor', preprocessor),
+    ('gradboosting', LogisticRegression(random_state=0, max_iter=100))
+    ])
     mlflow.sklearn.autolog()
     with mlflow.start_run():
-        model.set_params(gradboosting__max_iter=model_param1)
-        model.fit(X, y)
+        model2.set_params(gradboosting__max_iter=model_param1)
+        model2.fit(X, y)
         
         # #log model params
         # mlflow.log_param("model_param1", model_param1)
-        mlflow.sklearn.log_model(model, artifact_path="model_5mla")
+        mlflow.sklearn.log_model(model2, artifact_path="model_5mla")
         
         # pred = model.predict(X_test)
         # model_score = log_loss(y_test, pred)

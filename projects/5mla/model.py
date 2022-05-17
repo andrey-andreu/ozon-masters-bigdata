@@ -23,7 +23,7 @@ val_fields = ["id"] + numeric_features + categorical_features
 
 numeric_transformer = Pipeline(steps=[
     ('imputer', SimpleImputer(strategy='median')),
-#    ('scaler', StandardScaler())
+    # ('scaler', StandardScaler())
 ])
 
 categorical_transformer = Pipeline(steps=[
@@ -41,6 +41,6 @@ preprocessor = ColumnTransformer(
 
 # Now we have a full prediction pipeline.
 model = Pipeline(steps=[
-    ('preprocessor', preprocessor),
+    # ('preprocessor', preprocessor),
     ('gradboosting', LogisticRegression(random_state=0, max_iter=100))
 ])
