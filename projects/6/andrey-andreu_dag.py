@@ -41,7 +41,7 @@ with DAG(
     
     t4 = BashOperator(
         task_id='train_task',
-        bash_command=f'python /opt/conda/envs/dsenv/bin/python{base_dir}/feat_eng.py --train_in {base_dir}/nick_train_out_local --sklearn_model_out {base_dir}/6.joblib'
+        bash_command=f'python /opt/conda/envs/dsenv/bin/python{base_dir}/model_fit.py --train_in {base_dir}/nick_train_out_local --sklearn_model_out {base_dir}/6.joblib'
     )
 
     t5 = FileSensor(
@@ -52,7 +52,7 @@ with DAG(
     
     t6 = SparkSubmitOperator(
         task_id='predict_task',
-        application=f"{base_dir}/feat_test.py",
+        application=f"{base_dir}/predict_test.py",
         application_args = ["--test-in", 'hdfs:///user/andrey-andreu/andrey-andreu_test_out',
                            "--pred-out", "andrey-andreu_hw6_prediction",
                            "--sklearn-model-in", f'{base_dir}/6.joblib'],
