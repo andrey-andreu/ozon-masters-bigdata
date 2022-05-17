@@ -52,8 +52,9 @@ from pyspark.ml import PipelineModel
 model = load(model_path)
 test = spark.read.parquet(test_path)
 
-X_test = sp.dok_matrix((test.shape[0], test.word_vector[0]["size"]), dtype=int)
-for count, value in enumerate(test.word_vector):
+pd_test = test.select("word_vector").toPandas()
+X_test = sp.dok_matrix((pd_test.shape[0], pd_test.word_vector[0]["size"]), dtype=int)
+for count, value in enumerate(pd_test.word_vector):
     X_test[count, value.indices] = 1
 
 pred = model.predict(X_test)
