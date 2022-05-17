@@ -53,7 +53,7 @@ with DAG(
     t6 = SparkSubmitOperator(
         task_id='predict_task',
         application=f"{base_dir}/predict_test.py",
-        application_args = ["--test-in", 'hdfs:///user/andrey-andreu/andrey-andreu_test_out',
+        application_args = ["--test-in", 'andrey-andreu_test_out',
                            "--pred-out", "andrey-andreu_hw6_prediction",
                            "--sklearn-model-in", f'{base_dir}/6.joblib'],
         spark_binary="/usr/bin/spark-submit", 
