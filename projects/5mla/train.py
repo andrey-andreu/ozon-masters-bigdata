@@ -16,7 +16,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import log_loss
 from joblib import dump
-from model import fields
+# from model import fields
 
 import mlflow
 
@@ -24,6 +24,10 @@ import mlflow
 # Import model definition
 #
 def main():
+    numeric_features = ["if"+str(i) for i in range(1,14)]
+    categorical_features = ["cf"+str(i) for i in range(1,27)] + ["day_number"]
+
+    fields = ["id", "label"] + numeric_features + categorical_features
     # parser = argparse.ArgumentParser()
 
     # parser.add_argument('train_path', type=str)
