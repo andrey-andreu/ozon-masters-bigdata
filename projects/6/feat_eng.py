@@ -70,12 +70,12 @@ else:
 tokenizer = Tokenizer(inputCol="reviewText", outputCol="words")
 stop_words = StopWordsRemover.loadDefaultStopWords("english")
 swr = StopWordsRemover(inputCol=tokenizer.getOutputCol(), outputCol="words_filtered", stopWords=stop_words)
-count_vectorizer = CountVectorizer(inputCol=swr.getOutputCol(), outputCol="word_vector", binary=True)
-# assembler = VectorAssembler(inputCols=[count_vectorizer.getOutputCol(), 'verified', 'unixReviewTime'], outputCol="features")
+#count_vectorizer = CountVectorizer(inputCol=swr.getOutputCol(), outputCol="word_vector", binary=True)
+hasher = HashingTF(numFeatures=100000, binary=True, inputCol=swr.getOutputCol(), outputCol="word_vector")
 pipeline = Pipeline(stages=[
     tokenizer,
     swr,
-    count_vectorizer
+    hasher
 ])
 
 dataset = spark.read.json(data_path, schema=schema)
