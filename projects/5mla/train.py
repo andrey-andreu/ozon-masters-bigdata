@@ -73,7 +73,7 @@ def main():
     # df = df.astype(int)
     X = df.iloc[:,2:15]
     y = df.iloc[:,1]
-    X.fillna(0)
+    X.fillna(0, inplace=True)
     X = X.astype(int)
     #
     # Train the model
