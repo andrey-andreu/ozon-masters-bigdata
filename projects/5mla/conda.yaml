@@ -3,12 +3,11 @@ channels:
 - defaults
 - conda-forge
 dependencies:
-- python=3.7.13
+- python=3.7.9
 - pip
 - pip:
-  - mlflow
-  - cloudpickle==2.0.0
-  - scikit-learn==1.0.2
-  - pandas
-  - matplotlib==3.5.1
+  - mlflow 
+  - matplotlib==3.5.1 
+  - scikit-learn==1.0.2 
+  - cloudpickle==1.6.0
   
