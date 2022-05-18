@@ -41,6 +41,6 @@ preprocessor = ColumnTransformer(
 
 # Now we have a full prediction pipeline.
 model = Pipeline(steps=[
-    # ('preprocessor', preprocessor),
+    ('preprocessor', preprocessor),
     ('gradboosting', LogisticRegression(random_state=0, max_iter=100))
 ])

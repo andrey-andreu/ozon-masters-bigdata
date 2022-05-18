@@ -16,7 +16,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import log_loss
 from joblib import dump
-# from model import fields
+from model import model, fields
 
 import mlflow
 
@@ -24,10 +24,10 @@ import mlflow
 # Import model definition
 #
 def main():
-    numeric_features = ["if"+str(i) for i in range(1,14)]
-    categorical_features = ["cf"+str(i) for i in range(1,27)] + ["day_number"]
+    # numeric_features = ["if"+str(i) for i in range(1,14)]
+    # categorical_features = ["cf"+str(i) for i in range(1,27)] + ["day_number"]
 
-    fields = ["id", "label"] + numeric_features + categorical_features
+    # fields = ["id", "label"] + numeric_features + categorical_features
     # parser = argparse.ArgumentParser()
 
     # parser.add_argument('train_path', type=str)
@@ -75,25 +75,23 @@ def main():
     # df.iloc[:,2:15], df.iloc[:,1], test_size=0.33, random_state=42
     # )
     # df = df.astype(int)
-    X = df.iloc[:,2:15]
+    X = df.iloc[:,2:]
     y = df.iloc[:,1]
-    X.fillna(0, inplace=True)
-    X = X.astype(int)
     #
     # Train the model
     #
-    model2 = Pipeline(steps=[
-    # ('preprocessor', preprocessor),
-    ('gradboosting', LogisticRegression(random_state=0, max_iter=100))
-    ])
+    # model2 = Pipeline(steps=[
+    # # ('preprocessor', preprocessor),
+    # ('gradboosting', LogisticRegression(random_state=0, max_iter=100))
+    # ])
     mlflow.sklearn.autolog()
     with mlflow.start_run():
-        model2.set_params(gradboosting__max_iter=model_param1)
-        model2.fit(X, y)
+        model.set_params(gradboosting__max_iter=model_param1)
+        model.fit(X, y)
         
         # #log model params
         # mlflow.log_param("model_param1", model_param1)
-        mlflow.sklearn.log_model(model2, artifact_path="model_5mla")
+        mlflow.sklearn.log_model(model, artifact_path="model_5mla")
         
         # pred = model.predict(X_test)
         # model_score = log_loss(y_test, pred)
