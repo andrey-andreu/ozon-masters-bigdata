@@ -13,6 +13,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.ensemble import GradientBoostingClassifier
 
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import log_loss
 from joblib import dump
@@ -77,6 +78,9 @@ def main():
     # df = df.astype(int)
     X = df.iloc[:,2:15]
     y = df.iloc[:,1]
+
+    for col in X:
+        X.loc[:, col] = np.floor(pd.to_numeric(X.loc[:, col], errors='coerce')).astype('Int64')
     #
     # Train the model
     #
