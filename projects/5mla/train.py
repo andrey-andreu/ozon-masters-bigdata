@@ -75,7 +75,7 @@ def main():
     # df.iloc[:,2:15], df.iloc[:,1], test_size=0.33, random_state=42
     # )
     # df = df.astype(int)
-    X = df.iloc[:,2:]
+    X = df.iloc[:,2:15]
     y = df.iloc[:,1]
     #
     # Train the model
