@@ -1,1 +1,1 @@
-# ozon-masters-bigdata
+# задания по курсу "Big Data and Data Engineering" 
